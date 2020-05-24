@@ -1,6 +1,7 @@
 package guru.springfamework.controllers.v1;
 
 import guru.springfamework.api.v1.model.CategoryDTO;
+import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.domain.Category;
 import guru.springfamework.services.CategoryService;
 import org.junit.Before;
