@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class CategoryMapperTest {
 
     public static final String BOOKS = "Books";
-    public static final long ID = 1L;
+    public static final Long ID = 1L;
 
     CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
 
@@ -24,7 +24,7 @@ public class CategoryMapperTest {
 
         CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDto(category);
 
-        assertEquals(Long.valueOf(1L), categoryDTO.getId());
+        assertEquals(ID, categoryDTO.getId());
         assertEquals(BOOKS, categoryDTO.getName());
     }
 }

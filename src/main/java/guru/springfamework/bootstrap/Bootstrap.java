@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Nilvandro Muinga on 5/23/2020
  */
-//@Component
+@Component
 public class Bootstrap implements CommandLineRunner {
 
     private CategoryRepository categoryRepository;
