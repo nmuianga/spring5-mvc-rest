@@ -1,6 +1,7 @@
 package guru.springfamework.services;
 
 import guru.springfamework.api.v1.mapper.CategoryMapper;
+import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.domain.Category;
 import guru.springfamework.repositories.CategoryRepository;
 import org.junit.Before;
@@ -21,6 +22,8 @@ public class CategoryServiceImplTest {
 
     public static final String UNDERGROUND = "Underground";
     public static final long ID = 1L;
+    public static final String FIRSTNAME = "Nilvandro";
+    public static final String LASTNAME = "Muianga";
     @Mock
     CategoryRepository categoryRepository;
 

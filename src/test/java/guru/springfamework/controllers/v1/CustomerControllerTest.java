@@ -5,10 +5,7 @@ import guru.springfamework.services.CustomerService;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -59,7 +56,7 @@ public class CustomerControllerTest {
         Mockito.when(service.findAllCustomers()).thenReturn(customerDTOS);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customers")
-        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customers", Matchers.hasSize(2)));
     }
@@ -73,8 +70,25 @@ public class CustomerControllerTest {
         Mockito.when(service.findByFirstName("Nilvandro")).thenReturn(c1);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customers/Nilvandro")
-        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstname", Matchers.equalTo(FIRSTNAME)));
+    }
+
+    @Test
+    public void createNewCustomer() throws Exception {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstname(FIRSTNAME);
+        customerDTO.setLastname(LASTNAME);
+        customerDTO.setCustomerUrl("/api/customers/1");
+
+        Mockito.when(service.createNewCustomer(ArgumentMatchers.any())).thenReturn(customerDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customers")
+                .contentType(MediaType.APPLICATION_JSON)
+        .content(AbstractRestControllerTest.asJsonString(customerDTO)))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstname", Matchers.equalTo("Nilvandro")))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.customerUrl", Matchers.equalTo("/api/customers/1")));
     }
 }

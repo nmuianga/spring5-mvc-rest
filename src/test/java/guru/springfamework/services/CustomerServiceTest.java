@@ -4,9 +4,11 @@ import guru.springfamework.api.v1.mapper.CustomerMapper;
 import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.domain.Customer;
 import guru.springfamework.repositories.CustomerRepository;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -31,6 +33,24 @@ public class CustomerServiceTest {
         MockitoAnnotations.initMocks(this);
 
         service = new CustomerServiceImpl(customerRepository, CustomerMapper.INSATNCE);
+    }
+
+    @Test
+    public void createNewCustomer() {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstname("Nilvandro");
+
+        Customer c1 = new Customer();
+        c1.setFirstName(customerDTO.getFirstname());
+        c1.setLastName(LASTNAME);
+        c1.setId(1L);
+
+        Mockito.when(customerRepository.save(ArgumentMatchers.any())).thenReturn(c1);
+
+        CustomerDTO savedDto = service.createNewCustomer(customerDTO);
+
+        Assert.assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
+        Assert.assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
     }
 
     @Test

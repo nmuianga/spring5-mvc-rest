@@ -20,4 +20,10 @@ public interface CustomerMapper {
             @Mapping(source = "lastName", target = "lastname")}
     )
     CustomerDTO customerToCustomerDTO(Customer customer);
+
+    @Mappings({
+            @Mapping(source = "firstname", target = "firstName"),
+            @Mapping(source = "lastname", target = "lastName")
+    })
+    Customer customerDtoToCustomer(CustomerDTO customerDTO);
 }

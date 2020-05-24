@@ -6,9 +6,7 @@ import guru.springfamework.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Nilvandro Muinga on 5/24/2020
@@ -33,4 +31,10 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> findByFirstName(@PathVariable String firstName) {
         return new ResponseEntity<CustomerDTO>(customerService.findByFirstName(firstName), HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customerDTO) {
+        return new ResponseEntity<CustomerDTO>(customerService.createNewCustomer(customerDTO), HttpStatus.CREATED);
+    }
+
 }
