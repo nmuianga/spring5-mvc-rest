@@ -2,6 +2,7 @@ package guru.springfamework.controllers.v1;
 
 import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.services.CustomerService;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,9 +87,31 @@ public class CustomerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/customers")
                 .contentType(MediaType.APPLICATION_JSON)
-        .content(AbstractRestControllerTest.asJsonString(customerDTO)))
+                .content(AbstractRestControllerTest.asJsonString(customerDTO)))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstname", Matchers.equalTo("Nilvandro")))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.customerUrl", Matchers.equalTo("/api/customers/1")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customerUrl", Matchers.equalTo("/api/customers/1")));
+    }
+
+    @Test
+    public void testUpdateCustomer() throws Exception {
+        CustomerDTO customer = new CustomerDTO();
+        customer.setFirstname("Ricardo");
+        customer.setLastname("Muchanga");
+
+        CustomerDTO returnedDto = new CustomerDTO();
+        returnedDto.setLastname(customer.getLastname());
+        returnedDto.setFirstname(customer.getFirstname());
+        returnedDto.setCustomerUrl("/api/v1/customers/1");
+
+        Mockito.when(service.saveCustomerByDTO(ArgumentMatchers.anyLong(), ArgumentMatchers.any(CustomerDTO.class)))
+                .thenReturn(returnedDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/customers/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstname", CoreMatchers.equalTo("Ricardo")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastname", CoreMatchers.equalTo("Muchanga")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customerUrl", CoreMatchers.equalTo("/api/v1/customers/1")));
     }
 }

@@ -3,7 +3,7 @@ package guru.springfamework.api.v1.model;
 import lombok.Data;
 
 /**
- * Created by Nilvandro Muinga on 5/24/2020
+ * Created by Nilvandro Muianga on 5/24/2020
  */
 @Data
 public class CustomerDTO {
