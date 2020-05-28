@@ -80,4 +80,9 @@ public class CustomerServiceImpl implements CustomerService {
             return returnDto;
         }).orElseThrow(RuntimeException::new);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        this.customerRepository.deleteById(id);
+    }
 }

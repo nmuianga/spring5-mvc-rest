@@ -16,8 +16,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Nilvandro Muinga on 5/24/2020
  */
@@ -128,11 +126,20 @@ public class CustomerControllerTest {
         Mockito.when(service.patchCustomer(ArgumentMatchers.anyLong(), ArgumentMatchers.any(CustomerDTO.class))).thenReturn(returnDto);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/customers/1")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(AbstractRestControllerTest.asJsonString(customerDTO)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(AbstractRestControllerTest.asJsonString(customerDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstname", Matchers.equalTo("Nino")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastname", Matchers.equalTo("Mangane")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customerUrl", Matchers.equalTo("/api/v1/customers/1")));
+    }
+
+    @Test
+    public void testDeleteCustomer() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/customers/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(service, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong());
     }
 }

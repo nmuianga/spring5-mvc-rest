@@ -85,4 +85,13 @@ public class CustomerServiceTest {
         Assert.assertEquals(2, customers.size());
     }
 
+    @Test
+    public void deleteCustomer() {
+        Long id = 1L;
+
+        customerRepository.deleteById(id);
+
+        Mockito.verify(customerRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong());
+    }
+
 }
