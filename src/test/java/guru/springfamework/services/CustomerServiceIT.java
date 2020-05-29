@@ -93,7 +93,7 @@ public class CustomerServiceIT {
     }
     private Long getCustomerIdValue() {
         List<Customer> customers = customerRepository.findAll();
-        System.out.println("Customers fonu==und: " + customers.size());
+        System.out.println("Customers found: " + customers.size());
 
         return customers.get(0).getId();
     }
