@@ -6,14 +6,17 @@ import guru.springfamework.api.v1.model.CustomerListDTO;
 import guru.springfamework.domain.Customer;
 import guru.springfamework.repositories.CustomerRepository;
 import guru.springfamework.services.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by Nilvandro Muinga on 5/24/2020
+ * Created by Nilvandro Muianga on 5/24/2020
  */
+@Api(tags = {"This is my Customer Controller"})
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
@@ -25,6 +28,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @ApiOperation(value = "This will get a list of Customers", notes = "These are some notes about the API")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO findAllCustomers() {
